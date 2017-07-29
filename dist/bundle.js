@@ -16463,6 +16463,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 __webpack_require__(352);
 
+var calculate1RM = function calculate1RM(set) {
+    if (set.repetitions == 1) {
+        return set.weight;
+    }
+
+    return set.weight * set.repetitions * 0.0333 + set.weight;
+};
+
+var display1RM = function display1RM(maximum) {
+    document.querySelector("#rep-max").innerHTML = "Your 1 rep max is: " + maximum;
+};
+
 var Observable = _Rx2.default.Observable;
 var weightInput = document.querySelector("#weight");
 var repetitionInput = document.querySelector("#repetitions");
@@ -16479,17 +16491,11 @@ var repetitions = Observable.fromEvent(repetitionInput, "keyup").map(function ()
     return !Number.isNaN(repetitions);
 });
 
-weight.subscribe(function (value) {
-    console.log(value);
-});
-
-var calculations = weight.combineLatest(repetitions, function (weight, repetitions) {
+var set = weight.combineLatest(repetitions, function (weight, repetitions) {
     return { weight: weight, repetitions: repetitions };
-}).distinctUntilChanged();
+}).distinctUntilChanged().map(calculate1RM);
 
-calculations.subscribe(function (x) {
-    console.log(x);
-});
+set.subscribe(display1RM);
 
 /***/ }),
 /* 72 */
