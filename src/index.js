@@ -18,24 +18,44 @@ const display1RM = R.curry((element, maximum) => {
 const isNotNan = R.complement(Number.isNaN);
 const getEventTargetValue = (event) => event.target.value;
 const parseToInteger = (value) => Number.parseInt(value, 10);
+const maxAllowedReps = (repetitions) => repetitions <= 10;
+const hasTooMuchReps = R.complement(maxAllowedReps);
+const addErrorClass = (element) => element.closest(".form-group").classList.add("has-error");
+const removeErrorClass = (element) => element.closest(".form-group").classList.remove("has-error");
 
-const weight = Rx.Observable.fromEvent(document.querySelector("#weight"), "keyup")
+const weightInput = document.querySelector("#weight");
+const repetitionsInput = document.querySelector("#repetitions");
+const repMaxDisplayElement = document.querySelector("#rep-max");
+
+const weight = Rx.Observable.fromEvent(weightInput, "keyup")
     .map(getEventTargetValue)
     .map(parseToInteger)
     .filter(isNotNan);
 
-const repetitions = Rx.Observable.fromEvent(document.querySelector("#repetitions"), "keyup")
+const repetitions = Rx.Observable.fromEvent(repetitionsInput, "keyup")
     .map(getEventTargetValue)
     .map(parseToInteger)
     .filter(isNotNan);
+
+const validRepetitions = repetitions.filter(maxAllowedReps);
 
 const set = weight.combineLatest(
-        repetitions,
+        validRepetitions,
         (weight, repetitions) => {return {weight, repetitions}}
     )
     .distinctUntilChanged()
     .map(calculate1RM);
 
-const display1RMInH1 = display1RM(document.querySelector("#rep-max"));
+const display1RMInH1 = display1RM(repMaxDisplayElement);
 
 set.subscribe(display1RMInH1);
+
+repetitions
+    .filter(hasTooMuchReps)
+    .subscribe(() => {
+        repMaxDisplayElement.innerHTML = "";
+        addErrorClass(repetitionsInput);
+        alert("Too many repetitions to calculate 1 rep max");
+    });
+
+validRepetitions.subscribe(() => removeErrorClass(repetitionsInput));
