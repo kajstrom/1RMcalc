@@ -16472,7 +16472,7 @@ var calculate1RM = function calculate1RM(set) {
 };
 
 var display1RM = function display1RM(maximum) {
-    document.querySelector("#rep-max").innerHTML = "Your 1 rep max is: " + maximum;
+    document.querySelector("#rep-max").innerHTML = "Estimated 1RM: " + maximum;
 };
 
 var Observable = _Rx2.default.Observable;

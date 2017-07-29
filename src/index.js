@@ -11,7 +11,7 @@ const calculate1RM = (set) => {
 };
 
 const display1RM = (maximum) => {
-    document.querySelector("#rep-max").innerHTML = "Your 1 rep max is: " + maximum;
+    document.querySelector("#rep-max").innerHTML = "Estimated 1RM: " + maximum;
 };
 
 const Observable = Rx.Observable;
