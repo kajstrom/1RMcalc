@@ -15,7 +15,7 @@ const display1RM = R.curry((element, maximum) => {
     element.innerHTML = "Estimated 1RM: " + maximum;
 });
 
-const isNotNan = (number) => !Number.isNaN(number);
+const isNotNan = R.complement(Number.isNaN);
 const getEventTargetValue = (event) => event.target.value;
 const parseToInteger = (value) => Number.parseInt(value, 10);
 
