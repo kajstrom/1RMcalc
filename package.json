@@ -1,0 +1,18 @@
+{
+  "name": "1RMcalc",
+  "version": "0.0.1",
+  "description": "Application for calculating your weightlifting 1 repetition maximum.",
+  "keywords": [
+    "weightlifting",
+    "calculator"
+  ],
+  "author": {
+    "name": "Kaj Ström",
+    "email": "kaj.strom@kapsi.fi",
+    "url": "http://kajstrom.fi"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "webpack": "^3.4.1"
+  }
+}
