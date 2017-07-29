@@ -14,10 +14,6 @@ const repetitions = Observable.fromEvent(repetitionInput, "keyup")
     .map(() => Number.parseInt(repetitionInput.value))
     .filter((repetitions) => !Number.isNaN(repetitions));
 
-weight.subscribe((value) => {
-    console.log(value);
-});
-
 const calculations = weight.combineLatest(
         repetitions,
         (weight, repetitions) => {return {weight, repetitions}}
