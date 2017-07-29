@@ -20834,27 +20834,51 @@ var display1RM = _ramda2.default.curry(function (element, maximum) {
     element.innerHTML = "Estimated 1RM: " + maximum;
 });
 
-var isNotNan = function isNotNan(number) {
-    return !Number.isNaN(number);
-};
+var isNotNan = _ramda2.default.complement(Number.isNaN);
 var getEventTargetValue = function getEventTargetValue(event) {
     return event.target.value;
 };
 var parseToInteger = function parseToInteger(value) {
     return Number.parseInt(value, 10);
 };
+var maxAllowedReps = function maxAllowedReps(repetitions) {
+    return repetitions <= 10;
+};
+var hasTooMuchReps = _ramda2.default.complement(maxAllowedReps);
+var addErrorClass = function addErrorClass(element) {
+    return element.closest(".form-group").classList.add("has-error");
+};
+var removeErrorClass = function removeErrorClass(element) {
+    return element.closest(".form-group").classList.remove("has-error");
+};
 
-var weight = _Rx2.default.Observable.fromEvent(document.querySelector("#weight"), "keyup").map(getEventTargetValue).map(parseToInteger).filter(isNotNan);
+var weightInput = document.querySelector("#weight");
+var repetitionsInput = document.querySelector("#repetitions");
+var repMaxDisplayElement = document.querySelector("#rep-max");
 
-var repetitions = _Rx2.default.Observable.fromEvent(document.querySelector("#repetitions"), "keyup").map(getEventTargetValue).map(parseToInteger).filter(isNotNan);
+var weight = _Rx2.default.Observable.fromEvent(weightInput, "keyup").map(getEventTargetValue).map(parseToInteger).filter(isNotNan);
 
-var set = weight.combineLatest(repetitions, function (weight, repetitions) {
+var repetitions = _Rx2.default.Observable.fromEvent(repetitionsInput, "keyup").map(getEventTargetValue).map(parseToInteger).filter(isNotNan);
+
+var validRepetitions = repetitions.filter(maxAllowedReps);
+
+var set = weight.combineLatest(validRepetitions, function (weight, repetitions) {
     return { weight: weight, repetitions: repetitions };
 }).distinctUntilChanged().map(calculate1RM);
 
-var display1RMInH1 = display1RM(document.querySelector("#rep-max"));
+var display1RMInH1 = display1RM(repMaxDisplayElement);
 
 set.subscribe(display1RMInH1);
+
+repetitions.filter(hasTooMuchReps).subscribe(function () {
+    repMaxDisplayElement.innerHTML = "";
+    addErrorClass(repetitionsInput);
+    alert("Too many repetitions to calculate 1 rep max");
+});
+
+validRepetitions.subscribe(function () {
+    return removeErrorClass(repetitionsInput);
+});
 
 /***/ }),
 /* 191 */
