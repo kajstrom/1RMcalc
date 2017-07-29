@@ -1,5 +1,5 @@
 require("bootstrap-loader");
 
-let stuff = "adsa";
+let stuff = "abc1122";
 
 console.log(stuff);

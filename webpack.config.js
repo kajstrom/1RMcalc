@@ -12,5 +12,9 @@ module.exports = {
             { test: /\.(woff2?|svg)$/, loader: 'url-loader?limit=10000' },
             { test: /\.(ttf|eot)$/, loader: 'file-loader' },
         ]
+    },
+    devServer: {
+        contentBase: path.join(__dirname, "dist"),
+        port: 9000
     }
 };
