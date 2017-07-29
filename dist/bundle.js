@@ -65,9 +65,12 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-let stuff = "adsa";
+"use strict";
+
+
+var stuff = "adsa";
 
 console.log(stuff);
 
