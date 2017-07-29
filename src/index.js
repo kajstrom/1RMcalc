@@ -1,4 +1,5 @@
 import Rx from "rxjs/Rx";
+import R from "ramda";
 
 require("bootstrap-loader");
 
@@ -10,9 +11,9 @@ const calculate1RM = (set) => {
     return (set.weight * set.repetitions * 0.0333) + set.weight;
 };
 
-const display1RM = (maximum) => {
-    document.querySelector("#rep-max").innerHTML = "Estimated 1RM: " + maximum;
-};
+const display1RM = R.curry((element, maximum) => {
+    element.innerHTML = "Estimated 1RM: " + maximum;
+});
 
 const Observable = Rx.Observable;
 const weightInput = document.querySelector("#weight");
@@ -33,4 +34,6 @@ const set = weight.combineLatest(
     .distinctUntilChanged()
     .map(calculate1RM);
 
-set.subscribe(display1RM);
+const display1RMInH1 = display1RM(document.querySelector("#rep-max"));
+
+set.subscribe(display1RMInH1);
