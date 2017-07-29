@@ -1,3 +1,4 @@
+var webpack = require("webpack");
 var path = require("path");
 
 module.exports = {
@@ -16,5 +17,11 @@ module.exports = {
     devServer: {
         contentBase: path.join(__dirname, "dist"),
         port: 9000
-    }
+    },
+    plugins: [
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jQuery"
+        })
+    ]
 };
