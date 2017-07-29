@@ -4,7 +4,7 @@ import R from "ramda";
 require("bootstrap-loader");
 
 const calculate1RM = (set) => {
-    if (set.repetitions == 1) {
+    if (set.repetitions === 1) {
         return set.weight;
     }
 
@@ -15,17 +15,19 @@ const display1RM = R.curry((element, maximum) => {
     element.innerHTML = "Estimated 1RM: " + maximum;
 });
 
-const Observable = Rx.Observable;
-const weightInput = document.querySelector("#weight");
-const repetitionInput = document.querySelector("#repetitions");
+const isNotNan = (number) => !Number.isNaN(number);
+const getEventTargetValue = (event) => event.target.value;
+const parseToInteger = (value) => Number.parseInt(value, 10);
 
-const weight = Observable.fromEvent(weightInput, "keyup")
-    .map(() => Number.parseInt(weightInput.value))
-    .filter((weight) => !Number.isNaN(weight));
+const weight = Rx.Observable.fromEvent(document.querySelector("#weight"), "keyup")
+    .map(getEventTargetValue)
+    .map(parseToInteger)
+    .filter(isNotNan);
 
-const repetitions = Observable.fromEvent(repetitionInput, "keyup")
-    .map(() => Number.parseInt(repetitionInput.value))
-    .filter((repetitions) => !Number.isNaN(repetitions));
+const repetitions = Rx.Observable.fromEvent(document.querySelector("#repetitions"), "keyup")
+    .map(getEventTargetValue)
+    .map(parseToInteger)
+    .filter(isNotNan);
 
 const set = weight.combineLatest(
         repetitions,
