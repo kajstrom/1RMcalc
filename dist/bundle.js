@@ -20827,6 +20827,7 @@ __webpack_require__(671);
 var display1RM = _ramda2.default.curry(function (element, maximums) {
     element.querySelector("#epley").innerHTML = maximums.epley;
     element.querySelector("#brzycki").innerHTML = maximums.brzycki;
+    element.querySelector("#mcglothin").innerHTML = maximums.mcglothin;
 });
 
 var isNotNan = _ramda2.default.complement(Number.isNaN);
@@ -42771,10 +42772,22 @@ var brzyckiFormula = function brzyckiFormula(set) {
     return (36 / (37 - set.repetitions) * set.weight).toFixed(2);
 };
 
+var mcGlothinFormula = function mcGlothinFormula(set) {
+    if (set.repetitions === 1) {
+        return set.weight;
+    }
+
+    var weightMultiplied = 100 * set.weight;
+    var divider = 101.3 - 2.67123 * set.repetitions;
+
+    return (weightMultiplied / divider).toFixed(2);
+};
+
 var calculateAll = function calculateAll(set) {
     return {
         epley: epleyFormula(set),
-        brzycki: brzyckiFormula(set)
+        brzycki: brzyckiFormula(set),
+        mcglothin: mcGlothinFormula(set)
     };
 };
 
