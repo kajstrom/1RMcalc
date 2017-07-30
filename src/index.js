@@ -3,10 +3,10 @@ import R from "ramda";
 
 require("bootstrap-loader");
 
-import {epleyFormula} from "./repMaxFormulas";
+import {calculateAll} from "./repMaxFormulas";
 
-const display1RM = R.curry((element, maximum) => {
-    element.innerHTML = "Estimated 1RM: " + maximum;
+const display1RM = R.curry((element, maximums) => {
+    element.querySelector("#epley").innerHTML = maximums.epley;
 });
 
 const isNotNan = R.complement(Number.isNaN);
@@ -38,7 +38,7 @@ const set = weight.combineLatest(
         (weight, repetitions) => {return {weight, repetitions}}
     )
     .distinctUntilChanged()
-    .map(epleyFormula);
+    .map(calculateAll);
 
 const display1RMInH1 = display1RM(repMaxDisplayElement);
 

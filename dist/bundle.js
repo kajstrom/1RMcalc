@@ -20824,8 +20824,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 __webpack_require__(671);
 
-var display1RM = _ramda2.default.curry(function (element, maximum) {
-    element.innerHTML = "Estimated 1RM: " + maximum;
+var display1RM = _ramda2.default.curry(function (element, maximums) {
+    element.querySelector("#epley").innerHTML = maximums.epley;
 });
 
 var isNotNan = _ramda2.default.complement(Number.isNaN);
@@ -20858,7 +20858,7 @@ var validRepetitions = repetitions.filter(maxAllowedReps);
 
 var set = weight.combineLatest(validRepetitions, function (weight, repetitions) {
     return { weight: weight, repetitions: repetitions };
-}).distinctUntilChanged().map(_repMaxFormulas.epleyFormula);
+}).distinctUntilChanged().map(_repMaxFormulas.calculateAll);
 
 var display1RMInH1 = display1RM(repMaxDisplayElement);
 
@@ -42762,7 +42762,14 @@ var epleyFormula = function epleyFormula(set) {
     return (set.weight * set.repetitions * 0.0333 + set.weight).toFixed(2);
 };
 
+var calculateAll = function calculateAll(set) {
+    return {
+        epley: epleyFormula(set)
+    };
+};
+
 exports.epleyFormula = epleyFormula;
+exports.calculateAll = calculateAll;
 
 /***/ }),
 /* 671 */

@@ -6,4 +6,10 @@ const epleyFormula = (set) => {
     return ((set.weight * set.repetitions * 0.0333) + set.weight).toFixed(2);
 };
 
-export {epleyFormula};
+const calculateAll = (set) => {
+    return {
+        epley: epleyFormula(set)
+    };
+};
+
+export {epleyFormula, calculateAll};
