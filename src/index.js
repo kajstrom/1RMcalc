@@ -10,6 +10,7 @@ const display1RM = R.curry((element, maximums) => {
     element.querySelector("#brzycki").innerHTML = maximums.brzycki;
     element.querySelector("#mcglothin").innerHTML = maximums.mcglothin;
     element.querySelector("#lombardi").innerHTML = maximums.lombardi;
+    element.querySelector("#oconner").innerHTML = maximums.oconner;
 });
 
 const clear1RM = (element) => {

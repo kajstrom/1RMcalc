@@ -28,12 +28,17 @@ const lombardiFormula = ifSingleRepReturnWeight((set) => {
     return set.weight * (set.repetitions ** 0.10);
 });
 
+const oConnerFormula = ifSingleRepReturnWeight((set) => {
+    return set.weight * (1 + (set.repetitions / 40));
+});
+
 const calculateAll = (set) => {
     return {
         epley: epleyFormula(set),
         brzycki: brzyckiFormula(set),
         mcglothin: mcGlothinFormula(set),
-        lombardi: lombardiFormula(set)
+        lombardi: lombardiFormula(set),
+        oconner: oConnerFormula(set)
     };
 };
 

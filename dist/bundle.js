@@ -21083,6 +21083,7 @@ var display1RM = _ramda2.default.curry(function (element, maximums) {
     element.querySelector("#brzycki").innerHTML = maximums.brzycki;
     element.querySelector("#mcglothin").innerHTML = maximums.mcglothin;
     element.querySelector("#lombardi").innerHTML = maximums.lombardi;
+    element.querySelector("#oconner").innerHTML = maximums.oconner;
 });
 
 var clear1RM = function clear1RM(element) {
@@ -42799,12 +42800,17 @@ var lombardiFormula = ifSingleRepReturnWeight(function (set) {
     return set.weight * Math.pow(set.repetitions, 0.10);
 });
 
+var oConnerFormula = ifSingleRepReturnWeight(function (set) {
+    return set.weight * (1 + set.repetitions / 40);
+});
+
 var calculateAll = function calculateAll(set) {
     return {
         epley: epleyFormula(set),
         brzycki: brzyckiFormula(set),
         mcglothin: mcGlothinFormula(set),
-        lombardi: lombardiFormula(set)
+        lombardi: lombardiFormula(set),
+        oconner: oConnerFormula(set)
     };
 };
 
