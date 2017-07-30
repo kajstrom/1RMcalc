@@ -12,6 +12,10 @@ const display1RM = R.curry((element, maximums) => {
     element.querySelector("#lombardi").innerHTML = maximums.lombardi;
 });
 
+const clear1RM = (element) => {
+    element.querySelectorAll("tbody td").forEach((td) => td.innerHTML = "");
+};
+
 const isNotNan = R.complement(Number.isNaN);
 const getEventTargetValue = (event) => event.target.value;
 const parseToInteger = (value) => Number.parseInt(value, 10);
@@ -50,7 +54,7 @@ set.subscribe(display1RMInTable);
 repetitions
     .filter(hasTooMuchReps)
     .subscribe(() => {
-        repMaxDisplayElement.innerHTML = "";
+        clear1RM(repMaxDisplayElement);
         addErrorClass(repetitionsInput);
         alert("Too many repetitions to calculate 1 rep max");
     });

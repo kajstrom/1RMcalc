@@ -21085,6 +21085,12 @@ var display1RM = _ramda2.default.curry(function (element, maximums) {
     element.querySelector("#lombardi").innerHTML = maximums.lombardi;
 });
 
+var clear1RM = function clear1RM(element) {
+    element.querySelectorAll("tbody td").forEach(function (td) {
+        return td.innerHTML = "";
+    });
+};
+
 var isNotNan = _ramda2.default.complement(Number.isNaN);
 var getEventTargetValue = function getEventTargetValue(event) {
     return event.target.value;
@@ -21122,7 +21128,7 @@ var display1RMInTable = display1RM(repMaxDisplayElement);
 set.subscribe(display1RMInTable);
 
 repetitions.filter(hasTooMuchReps).subscribe(function () {
-    repMaxDisplayElement.innerHTML = "";
+    clear1RM(repMaxDisplayElement);
     addErrorClass(repetitionsInput);
     alert("Too many repetitions to calculate 1 rep max");
 });
