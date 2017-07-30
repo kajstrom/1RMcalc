@@ -20826,6 +20826,7 @@ __webpack_require__(671);
 
 var display1RM = _ramda2.default.curry(function (element, maximums) {
     element.querySelector("#epley").innerHTML = maximums.epley;
+    element.querySelector("#brzycki").innerHTML = maximums.brzycki;
 });
 
 var isNotNan = _ramda2.default.complement(Number.isNaN);
@@ -42762,13 +42763,23 @@ var epleyFormula = function epleyFormula(set) {
     return (set.weight * set.repetitions * 0.0333 + set.weight).toFixed(2);
 };
 
+var brzyckiFormula = function brzyckiFormula(set) {
+    if (set.repetitions === 1) {
+        return set.weight;
+    }
+
+    return (36 / (37 - set.repetitions) * set.weight).toFixed(2);
+};
+
 var calculateAll = function calculateAll(set) {
     return {
-        epley: epleyFormula(set)
+        epley: epleyFormula(set),
+        brzycki: brzyckiFormula(set)
     };
 };
 
 exports.epleyFormula = epleyFormula;
+exports.brzyckiFormula = brzyckiFormula;
 exports.calculateAll = calculateAll;
 
 /***/ }),

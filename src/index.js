@@ -7,6 +7,7 @@ import {calculateAll} from "./repMaxFormulas";
 
 const display1RM = R.curry((element, maximums) => {
     element.querySelector("#epley").innerHTML = maximums.epley;
+    element.querySelector("#brzycki").innerHTML = maximums.brzycki;
 });
 
 const isNotNan = R.complement(Number.isNaN);
