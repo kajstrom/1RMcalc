@@ -20827,7 +20827,7 @@ var calculate1RM = function calculate1RM(set) {
         return set.weight;
     }
 
-    return set.weight * set.repetitions * 0.0333 + set.weight;
+    return (set.weight * set.repetitions * 0.0333 + set.weight).toFixed(2);
 };
 
 var display1RM = _ramda2.default.curry(function (element, maximum) {

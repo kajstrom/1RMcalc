@@ -8,7 +8,7 @@ const calculate1RM = (set) => {
         return set.weight;
     }
 
-    return (set.weight * set.repetitions * 0.0333) + set.weight;
+    return ((set.weight * set.repetitions * 0.0333) + set.weight).toFixed(2);
 };
 
 const display1RM = R.curry((element, maximum) => {
