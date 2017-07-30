@@ -21084,6 +21084,7 @@ var display1RM = _ramda2.default.curry(function (element, maximums) {
     element.querySelector("#mcglothin").innerHTML = maximums.mcglothin;
     element.querySelector("#lombardi").innerHTML = maximums.lombardi;
     element.querySelector("#oconner").innerHTML = maximums.oconner;
+    element.querySelector("#mean").innerHTML = maximums.mean;
 });
 
 var clear1RM = function clear1RM(element) {
@@ -42764,7 +42765,7 @@ module.exports = _curry3(function zipWith(fn, a, b) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.calculateAll = exports.brzyckiFormula = exports.epleyFormula = undefined;
+exports.calculateAll = exports.meanFormula = exports.oConnerFormula = exports.lombardiFormula = exports.mcGlothinFormula = exports.brzyckiFormula = exports.epleyFormula = undefined;
 
 var _ramda = __webpack_require__(134);
 
@@ -42804,18 +42805,35 @@ var oConnerFormula = ifSingleRepReturnWeight(function (set) {
     return set.weight * (1 + set.repetitions / 40);
 });
 
+var meanFormula = function meanFormula(set) {
+    var maximums = [];
+
+    maximums.push(epleyFormula(set));
+    maximums.push(brzyckiFormula(set));
+    maximums.push(mcGlothinFormula(set));
+    maximums.push(lombardiFormula(set));
+    maximums.push(oConnerFormula(set));
+
+    return (_ramda2.default.sum(maximums) / maximums.length).toFixed(2);
+};
+
 var calculateAll = function calculateAll(set) {
     return {
         epley: epleyFormula(set),
         brzycki: brzyckiFormula(set),
         mcglothin: mcGlothinFormula(set),
         lombardi: lombardiFormula(set),
-        oconner: oConnerFormula(set)
+        oconner: oConnerFormula(set),
+        mean: meanFormula(set)
     };
 };
 
 exports.epleyFormula = epleyFormula;
 exports.brzyckiFormula = brzyckiFormula;
+exports.mcGlothinFormula = mcGlothinFormula;
+exports.lombardiFormula = lombardiFormula;
+exports.oConnerFormula = oConnerFormula;
+exports.meanFormula = meanFormula;
 exports.calculateAll = calculateAll;
 
 /***/ }),

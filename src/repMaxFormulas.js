@@ -32,14 +32,27 @@ const oConnerFormula = ifSingleRepReturnWeight((set) => {
     return set.weight * (1 + (set.repetitions / 40));
 });
 
+const meanFormula = (set) => {
+    let maximums = [];
+
+    maximums.push(epleyFormula(set));
+    maximums.push(brzyckiFormula(set));
+    maximums.push(mcGlothinFormula(set));
+    maximums.push(lombardiFormula(set));
+    maximums.push(oConnerFormula(set));
+
+    return (R.sum(maximums) / maximums.length).toFixed(2);
+};
+
 const calculateAll = (set) => {
     return {
         epley: epleyFormula(set),
         brzycki: brzyckiFormula(set),
         mcglothin: mcGlothinFormula(set),
         lombardi: lombardiFormula(set),
-        oconner: oConnerFormula(set)
+        oconner: oConnerFormula(set),
+        mean: meanFormula(set)
     };
 };
 
-export {epleyFormula, brzyckiFormula, calculateAll};
+export {epleyFormula, brzyckiFormula, mcGlothinFormula, lombardiFormula, oConnerFormula, meanFormula, calculateAll};
