@@ -3,13 +3,7 @@ import R from "ramda";
 
 require("bootstrap-loader");
 
-const calculate1RM = (set) => {
-    if (set.repetitions === 1) {
-        return set.weight;
-    }
-
-    return ((set.weight * set.repetitions * 0.0333) + set.weight).toFixed(2);
-};
+import {epleyFormula} from "./repMaxFormulas";
 
 const display1RM = R.curry((element, maximum) => {
     element.innerHTML = "Estimated 1RM: " + maximum;
@@ -44,7 +38,7 @@ const set = weight.combineLatest(
         (weight, repetitions) => {return {weight, repetitions}}
     )
     .distinctUntilChanged()
-    .map(calculate1RM);
+    .map(epleyFormula);
 
 const display1RMInH1 = display1RM(repMaxDisplayElement);
 
