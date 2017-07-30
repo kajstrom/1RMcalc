@@ -25,11 +25,20 @@ const mcGlothinFormula = (set) => {
     return (weightMultiplied / divider).toFixed(2);
 };
 
+const lombardiFormula = (set) => {
+    if (set.repetitions === 1) {
+        return set.weight;
+    }
+
+    return (set.weight * (set.repetitions ** 0.10)).toFixed(2)
+};
+
 const calculateAll = (set) => {
     return {
         epley: epleyFormula(set),
         brzycki: brzyckiFormula(set),
-        mcglothin: mcGlothinFormula(set)
+        mcglothin: mcGlothinFormula(set),
+        lombardi: lombardiFormula(set)
     };
 };
 

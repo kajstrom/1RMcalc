@@ -20828,6 +20828,7 @@ var display1RM = _ramda2.default.curry(function (element, maximums) {
     element.querySelector("#epley").innerHTML = maximums.epley;
     element.querySelector("#brzycki").innerHTML = maximums.brzycki;
     element.querySelector("#mcglothin").innerHTML = maximums.mcglothin;
+    element.querySelector("#lombardi").innerHTML = maximums.lombardi;
 });
 
 var isNotNan = _ramda2.default.complement(Number.isNaN);
@@ -20862,9 +20863,9 @@ var set = weight.combineLatest(validRepetitions, function (weight, repetitions) 
     return { weight: weight, repetitions: repetitions };
 }).distinctUntilChanged().map(_repMaxFormulas.calculateAll);
 
-var display1RMInH1 = display1RM(repMaxDisplayElement);
+var display1RMInTable = display1RM(repMaxDisplayElement);
 
-set.subscribe(display1RMInH1);
+set.subscribe(display1RMInTable);
 
 repetitions.filter(hasTooMuchReps).subscribe(function () {
     repMaxDisplayElement.innerHTML = "";
@@ -42783,11 +42784,20 @@ var mcGlothinFormula = function mcGlothinFormula(set) {
     return (weightMultiplied / divider).toFixed(2);
 };
 
+var lombardiFormula = function lombardiFormula(set) {
+    if (set.repetitions === 1) {
+        return set.weight;
+    }
+
+    return (set.weight * Math.pow(set.repetitions, 0.10)).toFixed(2);
+};
+
 var calculateAll = function calculateAll(set) {
     return {
         epley: epleyFormula(set),
         brzycki: brzyckiFormula(set),
-        mcglothin: mcGlothinFormula(set)
+        mcglothin: mcGlothinFormula(set),
+        lombardi: lombardiFormula(set)
     };
 };
 

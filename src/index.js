@@ -9,6 +9,7 @@ const display1RM = R.curry((element, maximums) => {
     element.querySelector("#epley").innerHTML = maximums.epley;
     element.querySelector("#brzycki").innerHTML = maximums.brzycki;
     element.querySelector("#mcglothin").innerHTML = maximums.mcglothin;
+    element.querySelector("#lombardi").innerHTML = maximums.lombardi;
 });
 
 const isNotNan = R.complement(Number.isNaN);
@@ -42,9 +43,9 @@ const set = weight.combineLatest(
     .distinctUntilChanged()
     .map(calculateAll);
 
-const display1RMInH1 = display1RM(repMaxDisplayElement);
+const display1RMInTable = display1RM(repMaxDisplayElement);
 
-set.subscribe(display1RMInH1);
+set.subscribe(display1RMInTable);
 
 repetitions
     .filter(hasTooMuchReps)
