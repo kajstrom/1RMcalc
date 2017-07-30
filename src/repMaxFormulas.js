@@ -1,37 +1,32 @@
-const epleyFormula = (set) => {
+import R from "ramda";
+
+const ifSingleRepReturnWeight = R.curry((formula, set) => {
     if (set.repetitions === 1) {
         return set.weight;
     }
 
-    return ((set.weight * set.repetitions * 0.0333) + set.weight).toFixed(2);
-};
+    let result = formula(set);
+    return result.toFixed(2);
+});
 
-const brzyckiFormula = (set) => {
-    if (set.repetitions === 1) {
-        return set.weight;
-    }
+const epleyFormula = ifSingleRepReturnWeight((set) => {
+    return (set.weight * set.repetitions * 0.0333) + set.weight;
+});
 
-    return ((36 / (37 - set.repetitions)) * set.weight).toFixed(2);
-};
+const brzyckiFormula = ifSingleRepReturnWeight((set) => {
+    return (36 / (37 - set.repetitions)) * set.weight;
+});
 
-const mcGlothinFormula = (set) => {
-    if (set.repetitions === 1) {
-        return set.weight;
-    }
-
+const mcGlothinFormula = ifSingleRepReturnWeight((set) => {
     let weightMultiplied = 100 * set.weight;
     let divider = 101.3 - 2.67123 * set.repetitions;
 
-    return (weightMultiplied / divider).toFixed(2);
-};
+    return weightMultiplied / divider;
+});
 
-const lombardiFormula = (set) => {
-    if (set.repetitions === 1) {
-        return set.weight;
-    }
-
-    return (set.weight * (set.repetitions ** 0.10)).toFixed(2)
-};
+const lombardiFormula = ifSingleRepReturnWeight((set) => {
+    return set.weight * (set.repetitions ** 0.10);
+});
 
 const calculateAll = (set) => {
     return {
